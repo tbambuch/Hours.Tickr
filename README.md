@@ -4,9 +4,7 @@ A small desktop app (Windows + macOS, built with [Tauri 2](https://tauri.app) an
 
 ## Screenshots
 
-| Timer (stopped) | Timer (running) | Timer (paused) | Settings |
-|:---:|:---:|:---:|:---:|
-| ![Timer stopped](docs/screenshots/timer-stopped.png) | ![Timer running](docs/screenshots/timer-running.png) | ![Timer paused](docs/screenshots/timer-paused.png) | ![Settings](docs/screenshots/settings.png) |
+![TimeWatch timer window](docs/screenshots/timer.png)
 
 ## Installation and running
 
@@ -107,7 +105,7 @@ The sign-in data (refresh token or API key) is in the system credential store un
 - `locales/` text dictionaries (cs/en), shared by Rust and the UI
 - `assets/` icons and the `generate-icons.js` script
 - `docs/SPEC.md` behaviour specification, `docs/ARCHITECTURE.md` architecture and code rules
-- `docs/screenshots/` screenshots used in this README
+- `docs/screenshots/` screenshot used in this README
 
 ## Known limitations
 
