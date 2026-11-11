@@ -1,117 +1,124 @@
 # TimeWatch
 
-Malá desktopová aplikace (Windows + macOS, [Tauri 2](https://tauri.app) a Rust), která měří čas práce na počítači a synchronizuje ho do [My Hours](https://app.myhours.com). Každý souvislý úsek běhu měření se uloží jako jeden time log.
+A small desktop app (Windows + macOS, built with [Tauri 2](https://tauri.app) and Rust) that tracks how long you work on your computer and syncs the time to [My Hours](https://app.myhours.com). Each continuous tracking run is saved as one time log.
 
-## Instalace a spuštění
+## Screenshots
 
-Požadavky: Node.js LTS, [Rust](https://rustup.rs) (stable) a na Windows MSVC C++ Build Tools včetně Windows SDK (workload „Desktop development with C++“) a WebView2 (součást Windows 11).
+| Timer (stopped) | Timer (running) | Timer (paused) | Settings |
+|:---:|:---:|:---:|:---:|
+| ![Timer stopped](docs/screenshots/timer-stopped.png) | ![Timer running](docs/screenshots/timer-running.png) | ![Timer paused](docs/screenshots/timer-paused.png) | ![Settings](docs/screenshots/settings.png) |
+
+## Installation and running
+
+Requirements: Node.js LTS, [Rust](https://rustup.rs) (stable), and on Windows the MSVC C++ Build Tools including the Windows SDK (workload "Desktop development with C++") and WebView2 (included in Windows 11).
 
 ```
 npm install
-npm start          # spuštění aplikace (tauri dev)
-npm test           # unit testy logiky (cargo test)
-npm run lint       # ESLint pro UI + cargo clippy
-npm run dist:win   # NSIS instalátor (src-tauri/target/release/bundle/nsis/)
-npm run dist:mac   # dmg (musí se sestavit na macOS)
-npm run icons      # znovu vygeneruje ikony v assets/
+npm start          # run the app (tauri dev)
+npm test           # logic unit tests (cargo test)
+npm run lint       # ESLint for the UI + cargo clippy
+npm run dist:win   # NSIS installer (src-tauri/target/release/bundle/nsis/)
+npm run dist:mac   # dmg (must be built on macOS)
+npm run icons      # regenerates the icons in assets/
 ```
 
-Instalátory (Windows i macOS) staví také GitHub Actions (`.github/workflows/build.yml`).
+Installers for Windows and macOS are also built by GitHub Actions (`.github/workflows/build.yml`).
 
-Po prvním spuštění se aplikace (v zabaleném tvaru) sama přidá do spouštění po přihlášení do systému; lze to vypnout v nastavení nebo v menu tray ikony. Při spuštění z `npm start` se automatické spouštění nenastavuje.
+After the first run, the packaged app adds itself to the system's startup programs. You can turn this off in the settings or from the tray icon menu. Running from `npm start` does not set up auto-start.
 
-## Přihlášení k My Hours
+## Signing in to My Hours
 
-TimeWatch podporuje dva způsoby přihlášení, vždy je aktivní jen jeden (uložení jednoho druhý nahradí).
+TimeWatch supports two sign-in methods. Only one is active at a time; saving one replaces the other.
 
-### 1. Přihlášení účtem My Hours (doporučeno, funguje i na free tarifu)
+### 1. My Hours account (recommended, also works on the free plan)
 
-1. Otevřete Nastavení (ikona ⚙) a klikněte na **Přihlásit se k My Hours**.
-2. V otevřeném okně se přihlaste jako ve webové aplikaci (e-mail a heslo, případně Google). Cookies přihlášení zůstávají v samostatném profilu okna, příště stačí obvykle jedno kliknutí.
-3. Po přihlášení vyberte **projekt** (a volitelně úkol) a klikněte na **Uložit**.
+1. Open Settings (⚙ icon) and click **Sign in to My Hours**.
+2. In the window that opens, sign in as you would on the web app (email and password, or Google). The sign-in cookies stay in a separate profile for that window, so next time one click is usually enough.
+3. After signing in, select a **project** (and optionally a task) and click **Save**.
 
-Aplikace nikdy nevidí vaše heslo, na stránku My Hours nic nevpisuje a nečte ji. Ukládá se jen obnovovací token, v systémovém úložišti přihlašovacích údajů (Windows Credential Manager / macOS Keychain); přístupový token je jen v paměti. **Odhlásit** token zneplatní, smaže ho a vymaže data přihlašovacího okna.
+The app never sees your password, does not type anything into the My Hours page, and does not read it. Only a refresh token is stored, in the system credential store (Windows Credential Manager / macOS Keychain); the access token is kept in memory only. **Sign out** revokes the token, deletes it, and clears the sign-in window's data.
 
-**Upozornění: toto je neoficiální cesta.** TimeWatch používá stejné přihlášení (OpenID Connect, Authorization Code + PKCE, `client_id` webové aplikace) jako web My Hours, protože oficiální API klíč je jen v placených tarifech. My Hours ji může kdykoli změnit, pak přestane fungovat a bude třeba aplikaci upravit.
+**Warning: this is an unofficial method.** TimeWatch uses the same sign-in as the My Hours web app (OpenID Connect, Authorization Code + PKCE, the web app's `client_id`), because the official API key is only available on paid plans. My Hours may change this at any time, in which case it stops working and the app needs to be updated.
 
-Pokud Google v okně odmítne přihlášení („nezabezpečený prohlížeč“), přihlaste se e-mailem a heslem k účtu My Hours (u účtu přihlašovaného přes Google si v My Hours nejdřív nastavte heslo). Vyprší-li přihlášení, aplikace ukáže „Přihlášení vypršelo – přihlaste se znovu“; měření se ukládá lokálně a odešle se po novém přihlášení.
+If Google refuses the sign-in inside the window ("insecure browser"), sign in with your My Hours email and password instead (for an account that was created with Google, first set a password for it in My Hours). If the sign-in expires, the app shows "Sign-in expired – please sign in again"; tracking is stored locally and uploaded after you sign in again.
 
-### 2. API klíč (placený tarif)
+### 2. API key (paid plan)
 
-1. Přihlaste se na https://app.myhours.com, v nastavení profilu v části **API** vytvořte **API key**.
-2. V Nastavení rozbalte „Mám placený tarif – použít API klíč“, vložte klíč a klikněte na **Ověřit**. Platný klíč se uloží.
-3. Vyberte projekt a klikněte na **Uložit**.
+1. Sign in at https://app.myhours.com and, in your profile settings under **API**, create an **API key**.
+2. In Settings, expand "I have a paid plan – use an API key", paste the key, and click **Verify**. A valid key is saved.
+3. Select a project and click **Save**.
 
-Klíč je uložen v systémovém úložišti přihlašovacích údajů. Do okna aplikace se nikdy nevrací celý (zobrazí se jen `••••1234`) a nikdy se nezapisuje do logu.
+The key is stored in the system credential store. The window never shows the full key again (only `••••1234`), and it is never written to the log.
 
-**Aktualizace ze starší verze:** `state.json` a `settings.json` se při prvním spuštění automaticky zkopírují ze starého umístění. Uložené přihlášení se nepřenáší, po aktualizaci se stačí jednou znovu přihlásit.
+**Upgrading from an older version:** `state.json` and `settings.json` are copied automatically from the old location on the first run. A saved sign-in is not carried over, so after updating you just need to sign in once more.
 
-Bez přihlášení a projektu okno ukazuje „Nastavte My Hours“ a měření nelze spustit.
+Without a sign-in and a project, the window shows "Set up My Hours" and tracking cannot be started.
 
-## Ovládání
+## Controls
 
-- **Kulaté tlačítko** (nebo mezerník / Enter): Start / Stop. Zastaveno = zelená šipka „play“, běží = červený stop, pozastaveno = ztlumený červený stop s textem „Pozastaveno“. Pod ním je dnešní naměřený čas ve formátu `H:MM`.
-- **📌** vždy navrchu (zapamatuje se), **⚙** nastavení, **–** skrýt do oznamovací oblasti. Okno lze přesouvat tažením, pozice se pamatuje.
-- Zavření okna aplikaci neukončí, běží dál v tray. Ukončení: tray menu → **Ukončit**.
-- Tray menu: Spustit/Zastavit, Zobrazit okno, Vždy navrchu, Nastavení…, Synchronizovat teď, Spouštět po startu systému, Ukončit.
+- **Round button** (or Space / Enter): Start / Stop. Stopped = green "play" arrow, running = red stop square, paused = dimmed red stop square with the "Paused" text. Below it is today's tracked time in `H:MM` format.
+- **📌** always on top (remembered), **⚙** settings, **–** hide to the notification area. The window can be dragged, and its position is remembered.
+- Closing the window does not quit the app; it keeps running in the tray. To quit: tray menu → **Quit**.
+- Tray menu: Start / Stop, Show window, Always on top, Settings…, Sync now, Start at system startup, Quit.
 
-## Jazyk a vzhled
+## Language and appearance
 
-V Nastavení jsou dvě volby, které se projeví okamžitě (bez restartu a bez nutnosti kliknout na Uložit):
+Two options in Settings take effect immediately (no restart and no need to click Save):
 
-- **Jazyk**: Podle systému (výchozí) / Čeština / English. „Podle systému“ použije první preferovaný jazyk systému (čeština a slovenština = čeština, jinak angličtina). Přepne se obě okna, tray menu, tooltip i titulky oken. Logy jsou vždy anglicky.
-- **Vzhled**: Podle systému (výchozí) / Světlý / Tmavý.
+- **Language**: System default (default) / Čeština / English. "System default" uses the first preferred language of the system (Czech and Slovak map to Czech, anything else to English). Both windows, the tray menu, the tooltip and the window titles are switched. Logs are always in English.
+- **Appearance**: System default (default) / Light / Dark.
 
-Všechny texty jsou ve slovnících `locales/cs.json` a `locales/en.json`.
+All texts are in the dictionaries `locales/cs.json` and `locales/en.json`.
 
-## Chování při zamčení, uspání a vypnutí
+## Behaviour on lock, sleep and shutdown
 
-Měření má stavy **zastaveno**, **běží** a **pozastaveno**. Zda má měření běžet, určuje jen uživatel (Start / Stop).
+Tracking has three states: **stopped**, **running** and **paused**. Only you decide whether tracking should run (Start / Stop).
 
-- **Zamknutí obrazovky nebo uspání**: aktuální úsek se uzavře a měření se pozastaví. Po odemknutí (nebo probuzení bez zamykací obrazovky) se automaticky otevře nový úsek.
-- **Vypnutí / odhlášení počítače**: úsek se uzavře a stav se zapíše na disk. Po dalším startu počítače a aplikace měření pokračuje novým úsekem.
-- **Ukončení aplikace** (Ukončit): úsek se uzavře, po příštím spuštění se měření obnoví, pokud běželo.
-- **Pád aplikace nebo výpadek proudu**: každých 30 s se zapisuje „heartbeat“. Nezavřený úsek se při příštím startu uzavře časem posledního heartbeatu.
-- **Půlnoc**: běžící úsek se rozdělí na 23:59:59.999 a 00:00 (logy se počítají po dnech).
-- Změna projektu, úkolu nebo poznámky během měření uzavře úsek a otevře nový s novými hodnotami.
+- **Screen lock or sleep**: the current run is closed and tracking is paused. After unlocking (or waking up without a lock screen), a new run is opened automatically.
+- **Shutdown / sign-out of the computer**: the run is closed and the state is saved to disk. After the next start of the computer and the app, tracking continues in a new run.
+- **Quitting the app** (Quit): the run is closed; on the next launch tracking resumes if it was running.
+- **App crash or power loss**: a "heartbeat" is written every 30 s. An unclosed run is closed at the time of the last heartbeat on the next start.
+- **Midnight**: a running run is split into 23:59:59.999 and 00:00 (logs are counted per day).
+- Changing the project, task or note during tracking closes the run and opens a new one with the new values.
 
-## Synchronizace
+## Synchronization
 
-Operace (start / stop / vložení hotového logu) se řadí do trvalé fronty a posílají se postupně. Při výpadku sítě se fronta uloží na disk a odešle později; start a stop, které se nestihly odeslat, se sloučí do jednoho `insertlog`. Úseky kratší než 60 s se neodesílají, pokud start ještě neodešel. Dočasné chyby (síť, 5xx, 408, 429) se opakují s prodlevou 30 s až 5 min, synchronizace běží také při každé změně stavu, při startu a periodicky (výchozí 5 minut, nastavitelné 1–60). Neplatný API klíč (401/403) zastaví pokusy do změny klíče. Ostatní chyby 4xx jsou trvalé: operace se označí jako neúspěšná, zapíše se do logu a ukáže se varování.
+Operations (start / stop / inserting a finished log) are placed in a persistent queue and sent in order. When the network is down, the queue is saved to disk and sent later; a start and a stop that were not sent yet are merged into one `insertlog`. Runs shorter than 60 s are not sent if their start has not been sent yet. Temporary errors (network, 5xx, 408, 429) are retried with a delay of 30 s to 5 min. Syncing also runs on every state change, at startup, and periodically (5 minutes by default, configurable from 1 to 60). An invalid API key (401/403) stops retries until the key is changed. Other 4xx errors are permanent: the operation is marked as failed, written to the log, and a warning is shown.
 
-Stav synchronizace ukazuje barevná tečka u názvu projektu (tooltip s popisem).
+A colored dot next to the project name shows the sync status (the tooltip describes it).
 
-## Kde jsou data a logy
+## Where data and logs are stored
 
-Složka uživatelských dat: `%APPDATA%\cz.timewatch.tracker` (Windows), `~/Library/Application Support/cz.timewatch.tracker` (macOS).
+User data folder: `%APPDATA%\cz.timewatch.tracker` (Windows), `~/Library/Application Support/cz.timewatch.tracker` (macOS).
 
-| Soubor | Obsah |
+| File | Contents |
 |---|---|
-| `state.json` | stav měření, úseky (7 dní), fronta synchronizace |
-| `settings.json` | projekt, úkol, poznámka, interval, jazyk, vzhled, pozice okna |
-| `logs/timewatch.log` | log (rotace při 1 MB, jeden starý soubor `.log.1`) |
+| `state.json` | tracking state, runs (7 days), sync queue |
+| `settings.json` | project, task, note, interval, language, appearance, window position |
+| `logs/timewatch.log` | log (rotated at 1 MB, one old file kept as `.log.1`) |
 
-Přihlášení (obnovovací token nebo API klíč) je v systémovém úložišti přihlašovacích údajů pod názvem služby „TimeWatch“, ne v souboru.
+The sign-in data (refresh token or API key) is in the system credential store under the service name "TimeWatch", not in a file.
 
-## Struktura projektu
+## Project structure
 
-- `src-tauri/core/` crate `timewatch-core`: čistá logika bez Tauri (`tracker`, `sync_queue`, `api`, `auth`, `secrets`, `power`, `idle_watcher`, `store`, `model`, `i18n`) a její testy
-- `src-tauri/src/` aplikace: `app.rs` (propojení), `ui.rs` (okna a tray), `commands.rs` (IPC), `platform/` (nečinnost, zámek obrazovky a události napájení pro Windows a macOS)
-- `ui/` okno časovače a nastavení (HTML/CSS/JS) a `tauri-bridge.js`
-- `locales/` slovníky textů (cs/en), sdílí je Rust i UI
-- `assets/` ikony a skript `generate-icons.js`
-- `docs/SPEC.md` specifikace chování, `docs/ARCHITECTURE.md` architektura a pravidla pro kód
+- `src-tauri/core/` crate `timewatch-core`: pure logic without Tauri (`tracker`, `sync_queue`, `api`, `auth`, `secrets`, `power`, `idle_watcher`, `store`, `model`, `i18n`) and its tests
+- `src-tauri/src/` the application: `app.rs` (wiring), `ui.rs` (windows and tray), `commands.rs` (IPC), `platform/` (idle, screen lock and power events for Windows and macOS)
+- `ui/` the timer and settings windows (HTML/CSS/JS) and `tauri-bridge.js`
+- `locales/` text dictionaries (cs/en), shared by Rust and the UI
+- `assets/` icons and the `generate-icons.js` script
+- `docs/SPEC.md` behaviour specification, `docs/ARCHITECTURE.md` architecture and code rules
+- `docs/screenshots/` screenshots used in this README
 
-## Známá omezení
+## Known limitations
 
-- Odpovědi `startNewLog` a `tasklist` v My Hours nejsou plně zdokumentované, parsují se defenzivně (viz `src-tauri/core/src/api.rs`). Formát pole `date` (nyní `YYYY-MM-DD`) je na jednom místě, pokud by API vracelo 400.
-- **macOS:** kód pro zámek obrazovky a nečinnost je psaný bez přístupu k Macu a ověřuje ho jen CI překladem. Zámek obrazovky se zjišťuje dotazováním jednou za sekundu, uspání se pozná z časové mezery mezi tiky a vypnutí/odhlášení ukončením aplikace. Před nasazením ho vyzkoušejte na skutečném Macu.
-- Instalátor není podepsaný, Windows SmartScreen (a na macOS Gatekeeper) proto při prvním spuštění zobrazí varování.
+- The `startNewLog` and `tasklist` responses of My Hours are not fully documented and are parsed defensively (see `src-tauri/core/src/api.rs`). The format of the `date` field (currently `YYYY-MM-DD`) is defined in one place, in case the API starts returning 400.
+- **macOS:** the code for screen lock and idle detection was written without access to a Mac and is only checked by a CI compile. Screen lock is detected by polling once per second, sleep is detected from the time gap between ticks, and shutdown/sign-out by the app quitting. Test it on a real Mac before deploying.
+- The installer is not signed, so Windows SmartScreen (and Gatekeeper on macOS) shows a warning on the first run.
 
-## Jeden záznam na den
+## One record per day
 
-Více spuštění a zastavení časovače (včetně zamčení obrazovky) se v My Hours spojí do **jednoho záznamu za den** pro stejný projekt, úkol a poznámku. Při každém dalším startu aplikace vytvoří nový běžící záznam s odpovídajícím posunem a starý zastavený smaže. Záznamy vytvořené starší verzí zůstanou beze změny.
+Multiple starts and stops of the timer (including screen locks) are merged into **one My Hours record per day** for the same project, task and note. Each new start of the app creates a new running record with the matching offset, and the old stopped one is deleted. Records created by an older version stay unchanged.
 
-## Nečinnost
+## Inactivity
 
-Když se určitou dobu nepohne myš ani nestiskne klávesa (výchozí 10 minut, v nastavení lze změnit, 0 = vypnuto), měření se pozastaví. Doba nečinnosti se do času **nepočítá** (úsek se uzavře v okamžiku posledního pohybu) a po prvním pohybu se měření samo obnoví. Pozor: sledování videa nebo čtení bez jakéhokoliv ovládání se počítá jako nečinnost.
+When neither the mouse nor the keyboard is used for a while (10 minutes by default, configurable in the settings, 0 = off), tracking is paused. The inactive time is **not** counted (the run is closed at the moment of the last movement), and tracking resumes automatically after the next movement. Note: watching a video or reading without any input counts as inactivity.
