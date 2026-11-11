@@ -1,10 +1,10 @@
 {
   "name": "timewatch",
-  "productName": "TimeWatch",
+  "productName": "Hours.Tickr",
   "version": "1.0.0",
   "description": "Měření času práce na PC se synchronizací do My Hours",
   "private": true,
-  "author": "TimeWatch",
+  "author": "Hours.Tickr",
   "license": "UNLICENSED",
   "scripts": {
     "start": "tauri dev",

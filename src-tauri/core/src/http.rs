@@ -44,7 +44,7 @@ pub struct ReqwestHttp {
 
 impl ReqwestHttp {
     pub fn new() -> Self {
-        let client = reqwest::Client::builder().user_agent("TimeWatch").build().unwrap_or_default();
+        let client = reqwest::Client::builder().user_agent("Hours.Tickr").build().unwrap_or_default();
         ReqwestHttp { client }
     }
 }

@@ -1,4 +1,4 @@
-//! TimeWatch core: pure application logic (no Tauri, no OS APIs).
+//! Hours.Tickr core: pure application logic (no Tauri, no OS APIs).
 //!
 //! See docs/ARCHITECTURE.md for the module overview and the rules for this crate.
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "TimeWatch",
+  "productName": "Hours.Tickr",
   "version": "1.0.0",
   "identifier": "cz.timewatch.tracker",
   "build": {

@@ -130,7 +130,7 @@ impl Core {
         std::fs::create_dir_all(&data_dir)?;
         let log = Logger::file(&data_dir.join("logs"));
         log.info(format!(
-            "app: starting TimeWatch {} ({}), data={}",
+            "app: starting Hours.Tickr {} ({}), data={}",
             app.package_info().version,
             std::env::consts::OS,
             data_dir.display()

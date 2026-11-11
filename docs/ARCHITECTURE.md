@@ -1,4 +1,4 @@
-# TimeWatch: architektura
+# Hours.Tickr: architektura
 
 Chování aplikace popisuje `docs/SPEC.md`. Tento dokument popisuje, jak je kód rozdělený.
 

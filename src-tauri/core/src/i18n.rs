@@ -139,7 +139,7 @@ mod tests {
 
     #[test]
     fn translate_fills_params_and_falls_back() {
-        assert_eq!(translate("en", "tray.tooltip", &[("time", "3:07"), ("state", "tracking")]), "TimeWatch – 3:07 today (tracking)");
+        assert_eq!(translate("en", "tray.tooltip", &[("time", "3:07"), ("state", "tracking")]), "Hours.Tickr – 3:07 today (tracking)");
         assert_eq!(translate("cs", "timer.sync.pending", &[("n", "2")]), "Čeká na odeslání: 2");
         assert_eq!(translate("cs", "no.such.key", &[]), "no.such.key");
         assert_eq!(translate("xx", "tray.quit", &[]), "Quit");

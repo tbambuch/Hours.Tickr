@@ -6,7 +6,7 @@ resolver = "2"
 name = "timewatch"
 version = "1.0.0"
 description = "Měření času práce na PC se synchronizací do My Hours"
-authors = ["TimeWatch"]
+authors = ["Hours.Tickr"]
 edition = "2021"
 rust-version = "1.80"
 

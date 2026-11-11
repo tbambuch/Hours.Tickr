@@ -1,4 +1,4 @@
-# TimeWatch – specifikace
+# Hours.Tickr – specifikace
 
 Malá desktopová aplikace (Windows + macOS), která měří čas práce na PC a synchronizuje ho do **My Hours** (https://app.myhours.com).
 
@@ -139,7 +139,7 @@ Stav synchronizace vystav do UI: `ok` / `pending` (počet čekajících operací
 
 ## 6. Tray
 
-- Ikona v oznamovací oblasti (Windows) / menu baru (macOS – použij template image). Dvě varianty: idle (šedá) a recording (s červenou tečkou); `paused` = idle varianta. Tooltip: `TimeWatch – 3:07 dnes` + stav.
+- Ikona v oznamovací oblasti (Windows) / menu baru (macOS – použij template image). Dvě varianty: idle (šedá) a recording (s červenou tečkou); `paused` = idle varianta. Tooltip: `Hours.Tickr – 3:07 dnes` + stav.
 - Klik (Windows) = zobrazit/skrýt okno.
 - Kontextové menu: `Spustit` / `Zastavit`, `Zobrazit okno`, `Vždy navrchu` (checkbox), `Nastavení…`, `Synchronizovat teď`, `Spouštět po startu systému` (checkbox), separator, `Ukončit`.
 
@@ -177,7 +177,7 @@ Unit testy (`cargo test`) pro `tracker` a `sync_queue` s falešnými hodinami a 
 
 ## 11. Přihlášení přes účet My Hours (OAuth) – hlavní způsob
 
-Důvod: API klíč je jen v placených tarifech. Webová aplikace My Hours (i na free tarifu) se přihlašuje přes OpenID Connect, Authorization Code + PKCE, a volá stejné API `api2.myhours.com` s Bearer tokenem. TimeWatch udělá totéž. **Neoficiální cesta** (používá client_id webové aplikace) – v README to uveď.
+Důvod: API klíč je jen v placených tarifech. Webová aplikace My Hours (i na free tarifu) se přihlašuje přes OpenID Connect, Authorization Code + PKCE, a volá stejné API `api2.myhours.com` s Bearer tokenem. Hours.Tickr udělá totéž. **Neoficiální cesta** (používá client_id webové aplikace) – v README to uveď.
 
 Ověřené parametry (z `https://login.myhours.com/.well-known/openid-configuration` a z přesměrování `app.myhours.com`):
 

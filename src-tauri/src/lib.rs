@@ -1,4 +1,4 @@
-//! TimeWatch: tray time tracker that syncs to My Hours (Tauri 2).
+//! Hours.Tickr: tray time tracker that syncs to My Hours (Tauri 2).
 
 mod app;
 mod commands;
@@ -48,7 +48,7 @@ pub fn run() {
             Ok(())
         })
         .build(tauri::generate_context!())
-        .expect("error while building TimeWatch");
+        .expect("error while building Hours.Tickr");
 
     app.run(|handle, event| match event {
         RunEvent::ExitRequested { api, code, .. } => {

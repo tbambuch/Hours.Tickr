@@ -1,6 +1,6 @@
 {
-  "win.timer.title": "TimeWatch",
-  "win.settings.title": "TimeWatch – Settings",
+  "win.timer.title": "Hours.Tickr",
+  "win.settings.title": "Hours.Tickr – Settings",
   "win.login.title": "Sign in to My Hours",
   "tray.start": "Start",
   "tray.stop": "Stop",
@@ -10,7 +10,7 @@
   "tray.syncNow": "Sync now",
   "tray.autostart": "Start at system startup",
   "tray.quit": "Quit",
-  "tray.tooltip": "TimeWatch – {time} today ({state})",
+  "tray.tooltip": "Hours.Tickr – {time} today ({state})",
   "tray.state.running": "tracking",
   "tray.state.paused": "paused",
   "tray.state.stopped": "stopped",

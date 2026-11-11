@@ -1,6 +1,6 @@
 {
-  "win.timer.title": "TimeWatch",
-  "win.settings.title": "TimeWatch – Nastavení",
+  "win.timer.title": "Hours.Tickr",
+  "win.settings.title": "Hours.Tickr – Nastavení",
   "win.login.title": "Přihlášení k My Hours",
   "tray.start": "Spustit",
   "tray.stop": "Zastavit",
@@ -10,7 +10,7 @@
   "tray.syncNow": "Synchronizovat teď",
   "tray.autostart": "Spouštět po startu systému",
   "tray.quit": "Ukončit",
-  "tray.tooltip": "TimeWatch – {time} dnes ({state})",
+  "tray.tooltip": "Hours.Tickr – {time} dnes ({state})",
   "tray.state.running": "měří se",
   "tray.state.paused": "pozastaveno",
   "tray.state.stopped": "zastaveno",

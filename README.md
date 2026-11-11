@@ -1,4 +1,4 @@
-# TimeWatch
+# Hours.Tickr
 
 A small desktop app (Windows + macOS, built with [Tauri 2](https://tauri.app) and Rust) that tracks how long you work on your computer and syncs the time to [My Hours](https://app.myhours.com). Each continuous tracking run is saved as one time log.
 
@@ -6,7 +6,7 @@ A small desktop app (Windows + macOS, built with [Tauri 2](https://tauri.app) an
 
 | Timer | Settings |
 |:---:|:---:|
-| ![TimeWatch timer window](docs/screenshots/timer.png) | ![TimeWatch settings window](docs/screenshots/settings.png) |
+| ![Hours.Tickr timer window](docs/screenshots/timer.png) | ![Hours.Tickr settings window](docs/screenshots/settings.png) |
 
 ## Installation and running
 
@@ -28,7 +28,7 @@ After the first run, the packaged app adds itself to the system's startup progra
 
 ## Signing in to My Hours
 
-TimeWatch supports two sign-in methods. Only one is active at a time; saving one replaces the other.
+Hours.Tickr supports two sign-in methods. Only one is active at a time; saving one replaces the other.
 
 ### 1. My Hours account (recommended, also works on the free plan)
 
@@ -38,7 +38,7 @@ TimeWatch supports two sign-in methods. Only one is active at a time; saving one
 
 The app never sees your password, does not type anything into the My Hours page, and does not read it. Only a refresh token is stored, in the system credential store (Windows Credential Manager / macOS Keychain); the access token is kept in memory only. **Sign out** revokes the token, deletes it, and clears the sign-in window's data.
 
-**Warning: this is an unofficial method.** TimeWatch uses the same sign-in as the My Hours web app (OpenID Connect, Authorization Code + PKCE, the web app's `client_id`), because the official API key is only available on paid plans. My Hours may change this at any time, in which case it stops working and the app needs to be updated.
+**Warning: this is an unofficial method.** Hours.Tickr uses the same sign-in as the My Hours web app (OpenID Connect, Authorization Code + PKCE, the web app's `client_id`), because the official API key is only available on paid plans. My Hours may change this at any time, in which case it stops working and the app needs to be updated.
 
 If Google refuses the sign-in inside the window ("insecure browser"), sign in with your My Hours email and password instead (for an account that was created with Google, first set a password for it in My Hours). If the sign-in expires, the app shows "Sign-in expired – please sign in again"; tracking is stored locally and uploaded after you sign in again.
 
