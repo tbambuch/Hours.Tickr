@@ -1,0 +1,27 @@
+[package]
+name = "timewatch-core"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.80"
+
+# Pure application logic: no Tauri, no OS APIs. Everything time-, network- and disk-dependent is injected,
+# so it can be unit tested on any platform.
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", default-features = false, features = ["std", "clock"] }
+uuid = { version = "1", features = ["v4"] }
+sha2 = "0.10"
+base64 = "0.22"
+getrandom = "0.3"
+url = "2"
+regex = "1"
+parking_lot = "0.12"
+async-trait = "0.1"
+tokio = { version = "1", features = ["rt", "time", "sync", "macros"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }
+keyring = { version = "3", features = ["apple-native", "windows-native"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt", "time", "sync", "macros", "test-util"] }
+tempfile = "3"

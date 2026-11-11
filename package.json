@@ -1,0 +1,23 @@
+{
+  "name": "timewatch",
+  "productName": "TimeWatch",
+  "version": "1.0.0",
+  "description": "Měření času práce na PC se synchronizací do My Hours",
+  "private": true,
+  "author": "TimeWatch",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "tauri dev",
+    "test": "cargo test --workspace --manifest-path src-tauri/Cargo.toml",
+    "icons": "node assets/generate-icons.js",
+    "dist:win": "tauri build --bundles nsis",
+    "dist:mac": "tauri build --bundles dmg --target universal-apple-darwin",
+    "lint": "eslint ui && cargo clippy --workspace --all-targets --manifest-path src-tauri/Cargo.toml -- -D warnings"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tauri-apps/cli": "^2",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0"
+  }
+}

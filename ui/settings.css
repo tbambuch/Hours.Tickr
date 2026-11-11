@@ -1,0 +1,79 @@
+:root {
+  --bg: #f6f7f9;
+  --fg: #1c2030;
+  --muted: #6b7280;
+  --field: #ffffff;
+  --border: #c9ced8;
+  --primary: #2563eb;
+  --primary-fg: #ffffff;
+  --ok: #167a4f;
+  --err: #c62828;
+  --focus: #2563eb;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f2330;
+    --fg: #eef0f6;
+    --muted: #9aa1b2;
+    --field: #2a2f40;
+    --border: #3f465c;
+    --primary: #4f83f0;
+    --ok: #4cc38a;
+    --err: #ff6b6b;
+    --focus: #8ab4ff;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px "Segoe UI", system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+main { padding: 16px 18px 14px; }
+h1 { font-size: 16px; margin: 0 0 10px; }
+section { margin-bottom: 12px; }
+label { display: block; margin: 8px 0 3px; font-weight: 600; }
+label.check { font-weight: normal; display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+
+input[type="text"], input[type="password"], input[type="number"], select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--fg);
+  font: inherit;
+}
+input:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.row { display: flex; gap: 8px; }
+.row input { flex: 1; }
+
+button {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+button.primary { background: var(--primary); border-color: var(--primary); color: var(--primary-fg); }
+button:disabled { opacity: 0.55; cursor: default; }
+
+.hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.status { min-height: 18px; margin-top: 4px; font-size: 12px; }
+.status.ok { color: var(--ok); }
+.status.err { color: var(--err); }
+.actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+.account { margin-bottom: 6px; }
+details { margin-bottom: 12px; }
+summary { cursor: pointer; color: var(--muted); }
+button[hidden] { display: none; }

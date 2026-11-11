@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-title-key="win.settings.title">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TimeWatch</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <main>
+    <h1 data-i18n="settings.heading"></h1>
+
+    <section>
+      <label data-i18n="settings.account"></label>
+      <div id="accountInfo" class="account"></div>
+      <div class="row">
+        <button id="login" type="button" class="primary" data-i18n="settings.login"></button>
+        <button id="logout" type="button" data-i18n="settings.logout" hidden></button>
+      </div>
+      <div id="loginStatus" class="status" role="status"></div>
+    </section>
+
+    <details id="keySection">
+      <summary data-i18n="settings.keySummary"></summary>
+      <label for="apiKey" data-i18n="settings.keyLabel"></label>
+      <div class="row">
+        <input id="apiKey" type="password" autocomplete="off" spellcheck="false" data-i18n-placeholder="settings.keyPlaceholder">
+        <button id="verify" type="button" data-i18n="settings.verify"></button>
+      </div>
+      <div id="keyStatus" class="status" role="status"></div>
+      <div class="hint" data-i18n="settings.keyHint"></div>
+    </details>
+
+    <section>
+      <label for="project" data-i18n="settings.project"></label>
+      <select id="project" disabled></select>
+
+      <label for="task" data-i18n="settings.task"></label>
+      <select id="task" disabled>
+        <option value="" data-i18n="settings.noTask"></option>
+      </select>
+
+      <label for="note" data-i18n="settings.note"></label>
+      <input id="note" type="text" maxlength="500" data-i18n-placeholder="settings.notePlaceholder">
+    </section>
+
+    <section>
+      <label for="interval" data-i18n="settings.interval"></label>
+      <input id="interval" type="number" min="1" max="60" step="1" value="5">
+
+      <label for="idle" data-i18n="settings.idle"></label>
+      <input id="idle" type="number" min="0" max="240" step="1" value="10">
+
+      <label class="check"><input id="autostart" type="checkbox"> <span data-i18n="settings.autostart"></span></label>
+
+      <label for="language" data-i18n="settings.language"></label>
+      <select id="language">
+        <option value="system" data-i18n="settings.lang.system"></option>
+        <option value="cs" data-i18n="settings.lang.cs"></option>
+        <option value="en" data-i18n="settings.lang.en"></option>
+      </select>
+
+      <label for="theme" data-i18n="settings.theme"></label>
+      <select id="theme">
+        <option value="system" data-i18n="settings.theme.system"></option>
+        <option value="light" data-i18n="settings.theme.light"></option>
+        <option value="dark" data-i18n="settings.theme.dark"></option>
+      </select>
+    </section>
+
+    <div id="saveStatus" class="status" role="status"></div>
+    <div class="actions">
+      <button id="cancel" type="button" class="secondary" data-i18n="settings.close"></button>
+      <button id="save" type="button" class="primary" data-i18n="settings.save"></button>
+    </div>
+  </main>
+  <script src="tauri-bridge.js"></script>
+  <script src="i18n-client.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+[workspace]
+members = ["core"]
+resolver = "2"
+
+[package]
+name = "timewatch"
+version = "1.0.0"
+description = "Měření času práce na PC se synchronizací do My Hours"
+authors = ["TimeWatch"]
+edition = "2021"
+rust-version = "1.80"
+
+[lib]
+name = "timewatch_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+timewatch-core = { path = "core" }
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-single-instance = "2"
+tauri-plugin-autostart = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "time", "sync", "macros"] }
+parking_lot = "0.12"
+url = "2"
+async-trait = "0.1"
+sys-locale = "0.3"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.61", features = [
+  "Win32_Foundation",
+  "Win32_Graphics_Gdi",
+  "Win32_System_LibraryLoader",
+  "Win32_System_RemoteDesktop",
+  "Win32_System_SystemInformation",
+  "Win32_UI_Input_KeyboardAndMouse",
+  "Win32_UI_WindowsAndMessaging",
+] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+core-foundation = "0.10"
+core-foundation-sys = "0.8"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

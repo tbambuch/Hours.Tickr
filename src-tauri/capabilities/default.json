@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Only the two local windows may talk to the app. The My Hours login window (remote content) gets no capability, so it cannot call any command.",
+  "windows": ["timer", "settings"],
+  "permissions": ["core:default", "core:window:allow-start-dragging"]
+}
