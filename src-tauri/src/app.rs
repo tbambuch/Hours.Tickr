@@ -550,6 +550,17 @@ impl Core {
             core.app.exit(0);
         });
     }
+
+    /// The process is about to end without going through `quit()`: on macOS, Cmd+Q, a Quit Apple event,
+    /// logout and shutdown call `applicationWillTerminate`, which Tauri reports only as `RunEvent::Exit`.
+    /// Close and persist the segment synchronously (no time for a sync); the queue is sent on the next start.
+    pub fn exit_without_quit(&self) {
+        if self.final_quit.load(Ordering::SeqCst) || self.quitting.swap(true, Ordering::SeqCst) {
+            return; // our own quit path, or a system shutdown that already persisted the state
+        }
+        self.log.info("app: terminated by the system");
+        self.tracker.shutdown();
+    }
 }
 
 fn uuid_v4() -> String {

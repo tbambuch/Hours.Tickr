@@ -10,7 +10,8 @@ use std::time::Duration;
 
 use core_foundation::base::TCFType;
 use core_foundation::string::CFString;
-use core_foundation_sys::base::CFRelease;
+use core_foundation_sys::base::{CFGetTypeID, CFRelease};
+use core_foundation_sys::number::{CFBooleanGetTypeID, CFBooleanGetValue, CFBooleanRef};
 use core_foundation_sys::dictionary::{CFDictionaryGetValueIfPresent, CFDictionaryRef};
 use timewatch_core::power::PowerEvents;
 
@@ -42,7 +43,10 @@ pub fn is_session_locked() -> bool {
         let key = CFString::new("CGSSessionScreenIsLocked");
         let mut value: *const c_void = std::ptr::null();
         let found = CFDictionaryGetValueIfPresent(dict, key.as_concrete_TypeRef() as *const c_void, &mut value) != 0;
-        let locked = found && !value.is_null() && core_foundation_sys::number::CFBooleanGetValue(value as _) != 0;
+        let locked = found
+            && !value.is_null()
+            && CFGetTypeID(value) == CFBooleanGetTypeID()
+            && CFBooleanGetValue(value as CFBooleanRef);
         CFRelease(dict as *const c_void);
         locked
     }

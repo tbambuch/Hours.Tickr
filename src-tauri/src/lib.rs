@@ -61,6 +61,11 @@ pub fn run() {
                 core.inner().clone().quit();
             }
         }
+        RunEvent::Exit => {
+            if let Some(core) = handle.try_state::<Arc<app::Core>>() {
+                core.exit_without_quit();
+            }
+        }
         #[cfg(target_os = "macos")]
         RunEvent::Reopen { .. } => ui::show_timer(handle),
         _ => {}
