@@ -181,8 +181,7 @@ $('save').addEventListener('click', async () => {
     theme: $('theme').value,
   });
   if (res.ok) {
-    setStatus($('saveStatus'), t('settings.saved'), 'ok');
-    loaded = await api.getSettings();
+    api.closeSettings();
   } else {
     setStatus($('saveStatus'), res.error, 'err');
   }

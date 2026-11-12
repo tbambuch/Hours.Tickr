@@ -96,6 +96,5 @@
   "settings.theme.light": "Light",
   "settings.theme.dark": "Dark",
   "settings.close": "Close",
-  "settings.save": "Save",
-  "settings.saved": "Saved."
+  "settings.save": "Save"
 }
