@@ -3,7 +3,7 @@ members = ["core"]
 resolver = "2"
 
 [package]
-name = "timewatch"
+name = "hours-tickr"
 version = "1.0.0"
 description = "Měření času práce na PC se synchronizací do My Hours"
 authors = ["Hours.Tickr"]
@@ -11,14 +11,14 @@ edition = "2021"
 rust-version = "1.80"
 
 [lib]
-name = "timewatch_lib"
+name = "hours_tickr_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-timewatch-core = { path = "core" }
+hours-tickr-core = { path = "core" }
 tauri = { version = "2", features = ["tray-icon", "image-png"] }
 tauri-plugin-single-instance = "2"
 tauri-plugin-autostart = "2"

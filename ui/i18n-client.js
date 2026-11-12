@@ -41,9 +41,9 @@
     },
     /** Called (after the DOM was re-translated) whenever the language changes. */
     onChange: (fn) => listeners.push(fn),
-    ready: window.timewatch.getI18n().then((p) => {
+    ready: window.hoursTickr.getI18n().then((p) => {
       set(p);
-      window.timewatch.onI18n(set);
+      window.hoursTickr.onI18n(set);
     }),
   };
 })();

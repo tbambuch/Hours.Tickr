@@ -89,19 +89,18 @@ A colored dot next to the project name shows the sync status (the tooltip descri
 
 ## Where data and logs are stored
 
-User data folder: `%APPDATA%\cz.timewatch.tracker` (Windows), `~/Library/Application Support/cz.timewatch.tracker` (macOS).
+User data folder: `%APPDATA%\cz.hourstickr.app` (Windows), `~/Library/Application Support/cz.hourstickr.app` (macOS).
 
 | File | Contents |
 |---|---|
 | `state.json` | tracking state, runs (7 days), sync queue |
 | `settings.json` | project, task, note, interval, language, appearance, window position |
-| `logs/timewatch.log` | log (rotated at 1 MB, one old file kept as `.log.1`) |
+| `logs/hours-tickr.log` | log (rotated at 1 MB, one old file kept as `.log.1`) |
 
-The sign-in data (refresh token or API key) is in the system credential store under the service name "TimeWatch", not in a file.
-
+The sign-in data (refresh token or API key) is in the system credential store under the service name "Hours.Tickr", not in a file.
 ## Project structure
 
-- `src-tauri/core/` crate `timewatch-core`: pure logic without Tauri (`tracker`, `sync_queue`, `api`, `auth`, `secrets`, `power`, `idle_watcher`, `store`, `model`, `i18n`) and its tests
+- `src-tauri/core/` crate `hours-tickr-core`: pure logic without Tauri (`tracker`, `sync_queue`, `api`, `auth`, `secrets`, `power`, `idle_watcher`, `store`, `model`, `i18n`) and its tests
 - `src-tauri/src/` the application: `app.rs` (wiring), `ui.rs` (windows and tray), `commands.rs` (IPC), `platform/` (idle, screen lock and power events for Windows and macOS)
 - `ui/` the timer and settings windows (HTML/CSS/JS) and `tauri-bridge.js`
 - `locales/` text dictionaries (cs/en), shared by Rust and the UI

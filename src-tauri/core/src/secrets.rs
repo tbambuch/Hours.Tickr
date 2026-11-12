@@ -11,7 +11,7 @@ use std::sync::Arc;
 use parking_lot::Mutex;
 use serde::{Deserialize, Serialize};
 
-pub const KEYRING_SERVICE: &str = "TimeWatch";
+pub const KEYRING_SERVICE: &str = "Hours.Tickr";
 pub const KEYRING_ACCOUNT: &str = "auth";
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
@@ -40,7 +40,7 @@ pub trait SecretBackend: Send + Sync {
 // OS keyring
 // ---------------------------------------------------------------------------------------------------------------
 
-/// OS credential store: service "TimeWatch", account "auth".
+/// OS credential store: service "Hours.Tickr", account "auth".
 #[derive(Clone, Copy, Debug, Default)]
 pub struct KeyringBackend;
 
@@ -291,7 +291,7 @@ mod tests {
             eprintln!("OS keyring not available, skipping");
             return;
         }
-        // Do not clobber real credentials of a developer machine that has TimeWatch installed.
+        // Do not clobber real credentials of a developer machine that has Hours.Tickr installed.
         let before = KeyringBackend::new().get().unwrap();
         let c = oauth("KEYRING-TEST-TOKEN");
         s.save_auth(&c).unwrap();

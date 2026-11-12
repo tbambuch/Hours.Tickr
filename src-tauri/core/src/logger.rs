@@ -51,14 +51,14 @@ impl Logger {
         (Logger(Arc::new(Sink::Memory(buf.clone()))), buf)
     }
 
-    /// `dir/timewatch.log`, rotated to `timewatch.log.1` above 1 MB.
+    /// `dir/hours-tickr.log`, rotated to `hours-tickr.log.1` above 1 MB.
     pub fn file(dir: &Path) -> Logger {
         Logger::file_with_limit(dir, MAX_BYTES)
     }
 
     pub fn file_with_limit(dir: &Path, max: u64) -> Logger {
         let _ = fs::create_dir_all(dir);
-        let path = dir.join("timewatch.log");
+        let path = dir.join("hours-tickr.log");
         let size = fs::metadata(&path).map(|m| m.len()).unwrap_or(0);
         Logger(Arc::new(Sink::File { path, size: Mutex::new(size), max }))
     }
@@ -135,7 +135,7 @@ mod tests {
         for i in 0..20 {
             log.info(format!("line number {i} with some padding text"));
         }
-        assert!(dir.path().join("timewatch.log").exists());
-        assert!(dir.path().join("timewatch.log.1").exists());
+        assert!(dir.path().join("hours-tickr.log").exists());
+        assert!(dir.path().join("hours-tickr.log.1").exists());
     }
 }

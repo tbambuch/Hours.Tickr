@@ -5,8 +5,8 @@ use std::sync::Arc;
 
 use serde_json::{json, Value};
 use tauri::{State, WebviewWindow};
-use timewatch_core::i18n::LANGUAGES;
-use timewatch_core::secrets::{Credentials, Secrets};
+use hours_tickr_core::i18n::LANGUAGES;
+use hours_tickr_core::secrets::{Credentials, Secrets};
 
 use crate::app::{id_or_null, Core, THEMES};
 use crate::ui;

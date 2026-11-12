@@ -1,10 +1,10 @@
 //! OS integration that Tauri does not provide: idle time, screen lock state and power/session events.
 //! Everything here only *reports*; the decisions live in
-//! `timewatch_core::power` and `timewatch_core::idle_watcher`.
+//! `hours_tickr_core::power` and `hours_tickr_core::idle_watcher`.
 
 use std::sync::Arc;
 
-use timewatch_core::power::PowerEvents;
+use hours_tickr_core::power::PowerEvents;
 
 #[cfg(target_os = "macos")]
 mod macos;

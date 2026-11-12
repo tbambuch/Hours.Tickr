@@ -1,7 +1,6 @@
-//! Application core: wires the `timewatch-core` pieces together (credentials, sync queue, tracker, power events).
+//! Application core: wires the `hours-tickr-core` pieces together (credentials, sync queue, tracker, power events).
 //! Windows/tray live in `ui.rs`, IPC commands in `commands.rs`.
 
-use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 
@@ -9,20 +8,20 @@ use async_trait::async_trait;
 use parking_lot::Mutex;
 use serde_json::{json, Value};
 use tauri::{AppHandle, Emitter, Manager};
-use timewatch_core::api::{AuthProvider, LogApi, MyHoursClient};
-use timewatch_core::auth::{self, AuthDeps, AuthManager};
-use timewatch_core::clock::{system_clock, Clock};
-use timewatch_core::error::{classify_error, ApiError, ErrorKind};
-use timewatch_core::http::{Http, ReqwestHttp};
-use timewatch_core::i18n;
-use timewatch_core::idle_watcher::IdleWatcher;
-use timewatch_core::logger::Logger;
-use timewatch_core::model::{JsonId, Settings, State, Target};
-use timewatch_core::power::{PowerDeps, PowerEvents};
-use timewatch_core::secrets::{Credentials, KeyringBackend, Secrets};
-use timewatch_core::store::{SharedSettings, Store};
-use timewatch_core::sync_queue::{SyncQueue, SyncQueueDeps};
-use timewatch_core::tracker::{Status, Tracker, TrackerDeps};
+use hours_tickr_core::api::{AuthProvider, LogApi, MyHoursClient};
+use hours_tickr_core::auth::{self, AuthDeps, AuthManager};
+use hours_tickr_core::clock::{system_clock, Clock};
+use hours_tickr_core::error::{classify_error, ApiError, ErrorKind};
+use hours_tickr_core::http::{Http, ReqwestHttp};
+use hours_tickr_core::i18n;
+use hours_tickr_core::idle_watcher::IdleWatcher;
+use hours_tickr_core::logger::Logger;
+use hours_tickr_core::model::{JsonId, Settings, State, Target};
+use hours_tickr_core::power::{PowerDeps, PowerEvents};
+use hours_tickr_core::secrets::{Credentials, KeyringBackend, Secrets};
+use hours_tickr_core::store::{SharedSettings, Store};
+use hours_tickr_core::sync_queue::{SyncQueue, SyncQueueDeps};
+use hours_tickr_core::tracker::{Status, Tracker, TrackerDeps};
 
 use crate::{platform, ui};
 
@@ -109,21 +108,6 @@ fn system_languages() -> Vec<String> {
     sys_locale::get_locales().collect()
 }
 
-/// Earlier versions kept their files in `<appData>/TimeWatch`; copy them over on the first start of this version.
-fn migrate_from_previous_version(data_dir: &Path, log: &Logger) {
-    let Some(parent) = data_dir.parent() else { return };
-    let old: PathBuf = parent.join("TimeWatch");
-    for name in ["state.json", "settings.json"] {
-        let (from, to) = (old.join(name), data_dir.join(name));
-        if from.is_file() && !to.exists() {
-            match std::fs::copy(&from, &to) {
-                Ok(_) => log.info(format!("migration: copied {name} from the previous version")),
-                Err(e) => log.warn(format!("migration: cannot copy {name}: {e}")),
-            }
-        }
-    }
-}
-
 impl Core {
     pub fn init(app: &AppHandle) -> Result<Arc<Core>, Box<dyn std::error::Error>> {
         let data_dir = app.path().app_data_dir()?;
@@ -135,7 +119,6 @@ impl Core {
             std::env::consts::OS,
             data_dir.display()
         ));
-        migrate_from_previous_version(&data_dir, &log);
 
         let mut st = Store::<State>::new(data_dir.join("state.json"), log.clone());
         st.load();
@@ -564,7 +547,7 @@ impl Core {
 }
 
 fn uuid_v4() -> String {
-    timewatch_core::tracker::new_uuid()
+    hours_tickr_core::tracker::new_uuid()
 }
 
 /// `push_state` from a place that only holds an `AppHandle` (callbacks created before `Core` exists).

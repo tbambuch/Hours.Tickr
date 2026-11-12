@@ -11,10 +11,10 @@ use tauri::tray::{MouseButton, MouseButtonState, TrayIcon, TrayIconBuilder, Tray
 use tauri::{
     AppHandle, LogicalSize, Manager, PhysicalPosition, Theme, WebviewUrl, WebviewWindow, WebviewWindowBuilder, WindowEvent,
 };
-use timewatch_core::auth::is_callback_url;
-use timewatch_core::clock::format_hm;
-use timewatch_core::model::WindowPos;
-use timewatch_core::tracker::Status;
+use hours_tickr_core::auth::is_callback_url;
+use hours_tickr_core::clock::format_hm;
+use hours_tickr_core::model::WindowPos;
+use hours_tickr_core::tracker::Status;
 
 use crate::app::{Core, THEMES};
 

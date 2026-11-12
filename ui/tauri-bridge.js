@@ -1,6 +1,6 @@
 'use strict';
 
-// Exposes `window.timewatch` to the windows on top of Tauri (commands = `invoke`, pushes from Rust = events). Loaded before i18n-client.js in every window.
+// Exposes `window.hoursTickr` to the windows on top of Tauri (commands = `invoke`, pushes from Rust = events). Loaded before i18n-client.js in every window.
 (function () {
   const tauri = window.__TAURI__;
   const invoke = (cmd, args) => tauri.core.invoke(cmd, args);
@@ -19,7 +19,7 @@
     };
   }
 
-  window.timewatch = {
+  window.hoursTickr = {
     // i18n (both windows)
     getI18n: () => invoke('i18n_get'),
     onI18n: (cb) => on('i18n', cb),

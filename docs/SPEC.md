@@ -9,7 +9,7 @@ UI texty jsou **česky**. Kód, komentáře, názvy souborů anglicky.
 ## 1. Technologie a struktura
 
 - **Tauri 2** (Rust) a webview s prostým HTML/CSS/JS (bez bundleru a frameworku). Logika je v Rustu, UI ve složce `ui/`.
-- Čistá logika je v samostatném crate `timewatch-core` (bez Tauri a OS API), takže se testuje kdekoli (`cargo test`).
+- Čistá logika je v samostatném crate `hours-tickr-core` (bez Tauri a OS API), takže se testuje kdekoli (`cargo test`).
 - Balení: `tauri build` (Windows: NSIS installer, macOS: dmg; dmg se staví na macOS, např. v CI).
 - Bezpečnost: okna smějí volat jen příkazy povolené v `src-tauri/capabilities/`, striktní CSP v `tauri.conf.json`. Přihlašovací okno (vzdálený obsah) k příkazům přístup nemá.
 - Single-instance (`tauri-plugin-single-instance`) – druhé spuštění jen zobrazí okno.
@@ -153,7 +153,7 @@ Stav synchronizace vystav do UI: `ok` / `pending` (počet čekajících operací
 
 ## 8. Logování
 
-- Jednoduchý log do `userData/logs/timewatch.log` (rotace při > 1 MB, ponech 1 starý). Loguj události (lock/unlock/suspend/…), sync operace a chyby. **Nikdy neloguj API klíč** ani hlavičku Authorization.
+- Jednoduchý log do `userData/logs/hours-tickr.log` (rotace při > 1 MB, ponech 1 starý). Loguj události (lock/unlock/suspend/…), sync operace a chyby. **Nikdy neloguj API klíč** ani hlavičku Authorization.
 
 ## 9. Testy (povinné)
 

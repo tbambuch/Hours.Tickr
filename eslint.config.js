@@ -15,7 +15,7 @@ module.exports = [
     },
   },
   {
-    // UI of the two windows: plain browser scripts (window.timewatch comes from tauri-bridge.js)
+    // UI of the two windows: plain browser scripts (window.hoursTickr comes from tauri-bridge.js)
     files: ['ui/**/*.js'],
     languageOptions: { ecmaVersion: 2023, sourceType: 'script', globals: { ...globals.browser } },
     rules: {

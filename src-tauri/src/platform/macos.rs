@@ -13,7 +13,7 @@ use core_foundation::string::CFString;
 use core_foundation_sys::base::{CFGetTypeID, CFRelease};
 use core_foundation_sys::number::{CFBooleanGetTypeID, CFBooleanGetValue, CFBooleanRef};
 use core_foundation_sys::dictionary::{CFDictionaryGetValueIfPresent, CFDictionaryRef};
-use timewatch_core::power::PowerEvents;
+use hours_tickr_core::power::PowerEvents;
 
 #[link(name = "ApplicationServices", kind = "framework")]
 extern "C" {
@@ -54,7 +54,7 @@ pub fn is_session_locked() -> bool {
 
 pub fn start_power_listener(events: Arc<PowerEvents>) {
     std::thread::Builder::new()
-        .name("timewatch-session".into())
+        .name("hours-tickr-session".into())
         .spawn(move || {
             let mut was_locked = is_session_locked();
             loop {

@@ -1,7 +1,7 @@
 'use strict';
 
 const $ = (id) => document.getElementById(id);
-const api = window.timewatch;
+const api = window.hoursTickr;
 let loaded = null;
 const t = (k, p) => window.i18n.t(k, p);
 

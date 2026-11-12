@@ -5,7 +5,7 @@
 
 use std::sync::{Arc, OnceLock};
 
-use timewatch_core::power::PowerEvents;
+use hours_tickr_core::power::PowerEvents;
 use windows::core::{w, PWSTR};
 use windows::Win32::Foundation::{HWND, LPARAM, LRESULT, WPARAM};
 use windows::Win32::System::LibraryLoader::GetModuleHandleW;
@@ -99,10 +99,10 @@ pub fn start_power_listener(events: Arc<PowerEvents>) {
         return; // already started
     }
     std::thread::Builder::new()
-        .name("timewatch-power".into())
+        .name("hours-tickr-power".into())
         .spawn(|| unsafe {
             let Ok(hinstance) = GetModuleHandleW(None) else { return };
-            let class_name = w!("TimeWatchPowerListener");
+            let class_name = w!("HoursTickrPowerListener");
             let class = WNDCLASSW { lpfnWndProc: Some(wnd_proc), hInstance: hinstance.into(), lpszClassName: class_name, ..Default::default() };
             if RegisterClassW(&class) == 0 {
                 return;
@@ -110,7 +110,7 @@ pub fn start_power_listener(events: Arc<PowerEvents>) {
             let Ok(hwnd) = CreateWindowExW(
                 WINDOW_EX_STYLE(0),
                 class_name,
-                w!("TimeWatch power events"),
+                w!("Hours.Tickr power events"),
                 WS_OVERLAPPED,
                 0,
                 0,

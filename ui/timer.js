@@ -47,21 +47,21 @@ function render(s) {
   $('project').title = s.projectName || '';
 }
 
-recordBtn.addEventListener('click', () => window.timewatch.toggle());
-pinBtn.addEventListener('click', () => window.timewatch.setPinned(!(state && state.pinned)));
-$('settings').addEventListener('click', () => window.timewatch.openSettings());
-$('hide').addEventListener('click', () => window.timewatch.hideWindow());
+recordBtn.addEventListener('click', () => window.hoursTickr.toggle());
+pinBtn.addEventListener('click', () => window.hoursTickr.setPinned(!(state && state.pinned)));
+$('settings').addEventListener('click', () => window.hoursTickr.openSettings());
+$('hide').addEventListener('click', () => window.hoursTickr.hideWindow());
 
 // Space / Enter = Start/Stop (native buttons keep their own activation behaviour).
 document.addEventListener('keydown', (e) => {
   if ((e.code === 'Space' || e.code === 'Enter') && !(e.target instanceof HTMLButtonElement)) {
     e.preventDefault();
-    window.timewatch.toggle();
+    window.hoursTickr.toggle();
   }
 });
 
 window.i18n.onChange(() => state && render(state)); // runs after the static texts were re-translated
-window.timewatch.onState(render);
-window.i18n.ready.then(() => window.timewatch.getState()).then(render);
+window.hoursTickr.onState(render);
+window.i18n.ready.then(() => window.hoursTickr.getState()).then(render);
 recordBtn.focus();
 window.addEventListener('focus', () => recordBtn.focus());

@@ -6,8 +6,8 @@ Chování aplikace popisuje `docs/SPEC.md`. Tento dokument popisuje, jak je kód
 
 ```
 src-tauri/
-  Cargo.toml            workspace + aplikace (crate `timewatch`)
-  core/                 crate `timewatch-core`: čistá logika, žádné Tauri/OS API, testovatelná kdekoli
+  Cargo.toml            workspace + aplikace (crate `hours-tickr`)
+  core/                 crate `hours-tickr-core`: čistá logika, žádné Tauri/OS API, testovatelná kdekoli
     src/model.rs        State, Segment, Op, Settings, JsonId, Ms + (de)serializace ISO časů
     src/clock.rs        Clock, FakeClock, local_midnight, local_date_str, format_hm
     src/logger.rs       Logger (file/memory/noop) + sanitize (redakce přihlašovacích údajů)
@@ -28,11 +28,11 @@ src-tauri/
     commands.rs         IPC příkazy volané z oken
     platform/           nečinnost, zámek obrazovky a události napájení (Windows, macOS)
   capabilities/         co smí okna volat
-ui/                     okna (HTML/CSS/JS) + tauri-bridge.js (`window.timewatch`)
+ui/                     okna (HTML/CSS/JS) + tauri-bridge.js (`window.hoursTickr`)
 locales/                cs.json, en.json
 ```
 
-## Pravidla pro `timewatch-core`
+## Pravidla pro `hours-tickr-core`
 
 - Čas je všude `Ms` (i64, ms od epochy). Do JSON/API se převádí přes `model::format_iso` a serde moduly `iso_ms`.
 - Žádné `unwrap()`/`expect()` na datech z disku, sítě nebo UI. Zámky jsou `parking_lot::Mutex` (bez poisoningu).
@@ -50,5 +50,5 @@ locales/                cs.json, en.json
 
 ## Data
 
-Data jsou v `%APPDATA%\cz.timewatch.tracker` (macOS `~/Library/Application Support/cz.timewatch.tracker`): `state.json`, `settings.json`, `logs/`.
-Při prvním startu se `state.json` a `settings.json` zkopírují ze starého umístění `…/TimeWatch`, pokud nové neexistují. Přihlašovací údaje jsou v systémovém úložišti (služba „TimeWatch“), starší uložená přihlášení se nepřenášejí.
+Data jsou v `%APPDATA%\cz.hourstickr.app` (macOS `~/Library/Application Support/cz.hourstickr.app`): `state.json`, `settings.json`, `logs/`.
+Přihlašovací údaje jsou v systémovém úložišti (služba „Hours.Tickr“).
