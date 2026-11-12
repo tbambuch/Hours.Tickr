@@ -50,5 +50,5 @@ locales/                cs.json, en.json
 
 ## Data
 
-Data jsou v `%APPDATA%\cz.hourstickr.app` (macOS `~/Library/Application Support/cz.hourstickr.app`): `state.json`, `settings.json`, `logs/`.
+Data jsou v `%APPDATA%\cz.hourstickr.tracker` (macOS `~/Library/Application Support/cz.hourstickr.tracker`): `state.json`, `settings.json`, `logs/`.
 Přihlašovací údaje jsou v systémovém úložišti (služba „Hours.Tickr“).

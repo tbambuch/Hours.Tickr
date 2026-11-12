@@ -89,7 +89,7 @@ A colored dot next to the project name shows the sync status (the tooltip descri
 
 ## Where data and logs are stored
 
-User data folder: `%APPDATA%\cz.hourstickr.app` (Windows), `~/Library/Application Support/cz.hourstickr.app` (macOS).
+User data folder: `%APPDATA%\cz.hourstickr.tracker` (Windows), `~/Library/Application Support/cz.hourstickr.tracker` (macOS).
 
 | File | Contents |
 |---|---|
